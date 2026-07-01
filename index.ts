@@ -1,12 +1,11 @@
-type Options = 'filter' | 'format'
-type Option = { [option in Options]: string }
+type Option = Record<'filter' | 'format', string>
 
 const width = (node: HTMLElement): number => node.offsetWidth
 const height = (node: HTMLElement): number => node.offsetHeight
 
-const cloneHTML = () => {
+const cloneHTML = (): HTMLElement | null => {
   const node = document.querySelector('html')
-  return node && node.cloneNode(true)
+  return node ? (node.cloneNode(true) as HTMLElement) : null
 }
 
 const createForeignObject = () => {
@@ -21,7 +20,7 @@ const createCanvas = (node: HTMLElement, image: HTMLImageElement) => {
   canvas.width = width(node)
   canvas.height = height(node)
   const ctx: CanvasRenderingContext2D | null = canvas.getContext('2d')
-  ctx && ctx.drawImage(image, 0, 0)
+  if (ctx) ctx.drawImage(image, 0, 0)
   return canvas
 }
 
@@ -36,13 +35,13 @@ const createImage = async (uri: string): Promise<HTMLImageElement> => {
   })
 }
 
-const getCss = (item: any) => item.cssText
-
 const getStylesFromFile = (node: HTMLElement) => {
-  const stylesheet: any = document.querySelector('[rel="stylesheet"]')
-  if (stylesheet) {
+  const stylesheet = document.querySelector<HTMLLinkElement>('[rel="stylesheet"]')
+  if (stylesheet?.sheet) {
     const head = node.querySelector('head')
-    const cssContent = Array.prototype.map.call(stylesheet.sheet.cssRules, getCss).join('\n')
+    const cssContent = Array.from(stylesheet.sheet.cssRules)
+      .map((rule) => rule.cssText)
+      .join('\n')
     const style = document.createElement('style')
     style.type = 'text/css'
     style.appendChild(document.createTextNode(cssContent))
@@ -51,19 +50,20 @@ const getStylesFromFile = (node: HTMLElement) => {
 }
 
 const createSvgURI = (node: HTMLElement, options: Option): string => {
-  const _html: any = cloneHTML()
-  _html.classList.add('domtoimage')
-  getStylesFromFile(_html)
-  if (!node || !_html) return 'false'
-  _html.removeChild(_html.querySelector('body'))
-  let _node: any = node.cloneNode(true)
+  const html = cloneHTML()
+  if (!node || !html) return 'false'
+  html.classList.add('domtoimage')
+  getStylesFromFile(html)
+  const body = html.querySelector('body')
+  if (body) html.removeChild(body)
+  let clonedNode = node.cloneNode(true) as HTMLElement
   if (options.filter) {
-    _node = filterNode(_node, options.filter)
+    clonedNode = filterNode(clonedNode, options.filter)
   }
-  _node.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml')
-  _html.appendChild(_node)
+  clonedNode.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml')
+  html.appendChild(clonedNode)
   const foreignObject = createForeignObject()
-  foreignObject.appendChild(_html)
+  foreignObject.appendChild(html)
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
   svg.setAttribute('width', width(node).toString())
   svg.setAttribute('height', height(node).toString())
