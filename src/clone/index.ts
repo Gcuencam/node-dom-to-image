@@ -1,5 +1,6 @@
 import type { Options } from '../types'
 import { preserveFormState, replaceSpecialNode } from './content'
+import { getDefaultStyle } from './defaults'
 
 const PSEUDO_ELEMENTS = ['::before', '::after'] as const
 
@@ -7,13 +8,15 @@ let pseudoClassCounter = 0
 
 const copyComputedStyle = (source: Element, target: HTMLElement) => {
   const computed = window.getComputedStyle(source)
+  const defaults = getDefaultStyle(source.tagName)
   const style = target.style
   for (const property of computed) {
-    style.setProperty(
-      property,
-      computed.getPropertyValue(property),
-      computed.getPropertyPriority(property),
-    )
+    const value = computed.getPropertyValue(property)
+    // Only carry properties that deviate from the UA default for this tag; the
+    // rest are already implied and would just bloat the serialized SVG.
+    if (value !== defaults[property]) {
+      style.setProperty(property, value, computed.getPropertyPriority(property))
+    }
   }
 }
 

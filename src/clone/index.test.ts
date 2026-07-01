@@ -28,6 +28,24 @@ describe('cloneNode', () => {
     node.remove()
   })
 
+  it('only inlines styles that differ from the UA default', () => {
+    const node = document.createElement('div')
+    node.style.color = 'rgb(0, 128, 0)'
+    document.body.appendChild(node)
+
+    const clone = cloneNode(node, {}, true)
+
+    // The deviating property is carried…
+    expect(clone?.style.color).toBe('rgb(0, 128, 0)')
+    // …but default properties for a <div> are dropped instead of bloating output.
+    expect(clone?.style.getPropertyValue('float')).toBe('')
+    expect(clone?.style.getPropertyValue('caption-side')).toBe('')
+    // The full computed style has hundreds of properties; the diff is far smaller.
+    expect(clone?.style.length ?? Infinity).toBeLessThan(60)
+
+    node.remove()
+  })
+
   it('applies the filter predicate to descendants but never to the root', () => {
     const node = document.createElement('div')
     node.className = 'root'
