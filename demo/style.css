@@ -1,0 +1,212 @@
+:root {
+  --bg: #0f1226;
+  --panel: #1b1f3b;
+  --ink: #e8e9f3;
+  --muted: #a0a3c4;
+  --accent: #6c5ce7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 2rem;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+header h1 {
+  margin: 0 0 0.25rem;
+}
+
+header p {
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+}
+
+code {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 1.5rem;
+}
+
+.controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.controls label.checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.controls select,
+.controls input[type='color'] {
+  padding: 0.35rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--panel);
+  color: var(--ink);
+}
+
+.buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+button {
+  padding: 0.55rem 1.1rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(1.1);
+}
+
+.stage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.panel {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.panel h2 {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+/* Captured card */
+.card {
+  background: linear-gradient(135deg, #6c5ce7, #00cec9);
+  color: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.card__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.card__role {
+  display: block;
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+.card__body {
+  margin: 0 0 1rem;
+  line-height: 1.5;
+}
+
+.card__body code {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.secret {
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.1em 0.3em;
+  border-radius: 4px;
+}
+
+.card__canvas {
+  display: block;
+  width: 100%;
+  height: 60px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  margin-bottom: 1rem;
+}
+
+.card__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+}
+
+.card__field input {
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  border: none;
+}
+
+.card__badge {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.card__badge::before {
+  content: '✎ ';
+}
+
+.output {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  overflow: auto;
+}
+
+.output img {
+  max-width: 100%;
+  height: auto;
+}
+
+.output__hint {
+  color: var(--muted);
+}
+
+.output__meta {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.output.is-error {
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
