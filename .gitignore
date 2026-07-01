@@ -4,8 +4,8 @@ node_modules/**/*
 # Ignore built ts files
 dist/**/*
 
-# Ignore demo react app
-demo/**/*
+# Ignore demo build output (the demo source itself is versioned)
+demo/dist/**/*
 
 # Ignore vitest browser-mode artifacts
 **/__screenshots__/
