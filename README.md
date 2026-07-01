@@ -14,9 +14,9 @@ Then load
 
 ```javascript
 /* in ES 6 */
-import domtoimage from 'node-dom-to-image';
+import domtoimage from 'node-dom-to-image'
 /* in ES 5 */
-var domtoimage = require('node-dom-to-image');
+var domtoimage = require('node-dom-to-image')
 ```
 
 ## Usage

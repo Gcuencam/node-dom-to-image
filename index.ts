@@ -1,5 +1,5 @@
-type Options = "filter" | "format"
-type Option = { [option in Options]: string };
+type Options = 'filter' | 'format'
+type Option = { [option in Options]: string }
 
 const width = (node: HTMLElement): number => node.offsetWidth
 const height = (node: HTMLElement): number => node.offsetHeight
@@ -68,7 +68,10 @@ const createSvgURI = (node: HTMLElement, options: Option): string => {
   svg.setAttribute('width', width(node).toString())
   svg.setAttribute('height', height(node).toString())
   svg.appendChild(foreignObject)
-  return 'data:image/svg+xml; charset=utf8, ' + encodeURIComponent(new XMLSerializer().serializeToString(svg))
+  return (
+    'data:image/svg+xml; charset=utf8, ' +
+    encodeURIComponent(new XMLSerializer().serializeToString(svg))
+  )
 }
 
 const createLink = (url: string, name: string) => {
@@ -79,7 +82,7 @@ const createLink = (url: string, name: string) => {
 }
 
 const filterNode = (node: HTMLElement, selector: string): HTMLElement => {
-  node.querySelectorAll(selector).forEach(n => n.remove());
+  node.querySelectorAll(selector).forEach((n) => n.remove())
   return node
 }
 
