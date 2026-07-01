@@ -1,14 +1,7 @@
+import { cloneHTML, filterNode, height, width } from './dom'
 import type { DomToImageOptions } from './types'
 
 export type { DomToImageOptions }
-
-const width = (node: HTMLElement): number => node.offsetWidth
-const height = (node: HTMLElement): number => node.offsetHeight
-
-const cloneHTML = (): HTMLElement | null => {
-  const node = document.querySelector('html')
-  return node ? (node.cloneNode(true) as HTMLElement) : null
-}
 
 const createForeignObject = () => {
   const foreignObject = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject')
@@ -81,11 +74,6 @@ const createLink = (url: string, name: string) => {
   link.download = name
   link.href = url
   return link
-}
-
-const filterNode = (node: HTMLElement, selector: string): HTMLElement => {
-  node.querySelectorAll(selector).forEach((n) => n.remove())
-  return node
 }
 
 const domDownloader = async (
