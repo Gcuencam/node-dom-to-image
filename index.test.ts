@@ -12,4 +12,11 @@ describe('domToImage', () => {
     const foreignObject = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject')
     expect(foreignObject.namespaceURI).toBe('http://www.w3.org/2000/svg')
   })
+
+  it('accepts a call without an options argument, as documented in the README', async () => {
+    const node = document.createElement('div')
+    document.body.appendChild(node)
+    await expect(domToImage(node, 'example')).resolves.not.toThrow()
+    node.remove()
+  })
 })

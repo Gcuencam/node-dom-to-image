@@ -1,4 +1,9 @@
-type Option = Record<'filter' | 'format', string>
+export interface DomToImageOptions {
+  /** CSS selector matching elements to exclude from the capture. */
+  filter?: string
+  /** MIME type passed to `canvas.toDataURL`. Defaults to `'image/png'`. */
+  format?: string
+}
 
 const width = (node: HTMLElement): number => node.offsetWidth
 const height = (node: HTMLElement): number => node.offsetHeight
@@ -49,7 +54,7 @@ const getStylesFromFile = (node: HTMLElement) => {
   }
 }
 
-const createSvgURI = (node: HTMLElement, options: Option): string => {
+const createSvgURI = (node: HTMLElement, options: DomToImageOptions = {}): string => {
   const html = cloneHTML()
   if (!node || !html) return 'false'
   html.classList.add('domtoimage')
@@ -86,7 +91,11 @@ const filterNode = (node: HTMLElement, selector: string): HTMLElement => {
   return node
 }
 
-const domDownloader = async (node: HTMLElement, fileName: string, options: Option) => {
+const domDownloader = async (
+  node: HTMLElement,
+  fileName: string,
+  options: DomToImageOptions = {},
+) => {
   const uri: string = createSvgURI(node, options)
   const { format = 'image/png' } = options
   try {
