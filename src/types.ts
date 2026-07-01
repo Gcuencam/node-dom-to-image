@@ -21,4 +21,6 @@ export interface Options {
   height?: number
   /** Inline styles applied to the cloned root node before rasterizing. */
   style?: Partial<CSSStyleDeclaration>
+  /** Skip embedding `@font-face` web fonts. Speeds up capture when fonts are irrelevant. */
+  skipFonts?: boolean
 }

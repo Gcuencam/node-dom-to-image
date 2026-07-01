@@ -1,6 +1,7 @@
 import { cloneNode } from '../clone'
 import { height, width } from '../dom'
 import { embedResources } from '../embed'
+import { embedWebFonts, waitForFonts } from '../fonts'
 import type { Options } from '../types'
 
 const XHTML_NAMESPACE = 'http://www.w3.org/1999/xhtml'
@@ -30,10 +31,13 @@ const applyStyleOption = (node: HTMLElement, style: Options['style']) => {
  * `<foreignObject>`.
  */
 export const createSvgURI = async (node: HTMLElement, options: Options = {}): Promise<string> => {
+  await waitForFonts()
+
   const clone = cloneNode(node, options, true)
   if (!clone) return ''
 
   await embedResources(clone)
+  if (!options.skipFonts) await embedWebFonts(clone)
   applyStyleOption(clone, options.style)
   clone.setAttribute('xmlns', XHTML_NAMESPACE)
 

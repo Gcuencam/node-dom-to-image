@@ -7,37 +7,7 @@
  * embedded up front.
  */
 
-const dataUrlCache = new Map<string, Promise<string>>()
-
-const isDataUrl = (url: string): boolean => url.startsWith('data:')
-
-const blobToDataUrl = (blob: Blob): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onloadend = () => resolve(reader.result as string)
-    reader.onerror = () => reject(reader.error)
-    reader.readAsDataURL(blob)
-  })
-
-const fetchAsDataUrl = (url: string): Promise<string> => {
-  const cached = dataUrlCache.get(url)
-  if (cached) return cached
-
-  const promise = fetch(url, { cache: 'force-cache' })
-    .then((response) => {
-      if (!response.ok) throw new Error(`Failed to fetch ${url}: ${response.status}`)
-      return response.blob()
-    })
-    .then(blobToDataUrl)
-    .catch((error) => {
-      // Don't poison the cache with a permanent failure for this URL.
-      dataUrlCache.delete(url)
-      throw error
-    })
-
-  dataUrlCache.set(url, promise)
-  return promise
-}
+import { fetchAsDataUrl, isDataUrl } from '../resource'
 
 const embedImage = async (image: HTMLImageElement): Promise<void> => {
   const src = image.src
