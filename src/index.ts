@@ -10,7 +10,7 @@ const domDownloader = async (node: HTMLElement, fileName: string, options: Optio
   try {
     const uri = await createSvgURI(node, options)
     const image = await createImage(uri)
-    const canvas = createCanvas(node, image)
+    const canvas = createCanvas(node, image, options)
     const link = createLink(canvas.toDataURL(format, 1.0), fileName)
     link.click()
   } catch (err) {
