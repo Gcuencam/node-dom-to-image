@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { cloneHTML, filterNode, height, width } from './dom'
+import { cloneHTML, filterNode, height, width } from './index'
 
 describe('width/height', () => {
   it('read the offset dimensions of a node', () => {

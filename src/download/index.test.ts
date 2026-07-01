@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { createLink } from './download'
+import { createLink } from './index'
 
 describe('createLink', () => {
   it('creates an anchor configured to download the given url under the given name', () => {

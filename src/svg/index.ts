@@ -1,6 +1,6 @@
-import { cloneHTML, filterNode, height, width } from './dom'
-import { getStylesFromFile } from './styles'
-import type { DomToImageOptions } from './types'
+import { cloneHTML, filterNode, height, width } from '../dom'
+import { getStylesFromFile } from '../styles'
+import type { DomToImageOptions } from '../types'
 
 const createForeignObject = () => {
   const foreignObject = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject')

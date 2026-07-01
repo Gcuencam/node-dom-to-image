@@ -1,4 +1,4 @@
-import { height, width } from './dom'
+import { height, width } from '../dom'
 
 export const createImage = async (uri: string): Promise<HTMLImageElement> => {
   return new Promise((resolve, reject) => {

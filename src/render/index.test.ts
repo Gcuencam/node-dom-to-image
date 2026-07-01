@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { createCanvas, createImage } from './render'
+import { createCanvas, createImage } from './index'
 
 const TRANSPARENT_PIXEL_PNG =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII='

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { getStylesFromFile } from './styles'
+import { getStylesFromFile } from './index'
 
 describe('getStylesFromFile', () => {
   it('does nothing when the document has no stylesheet link', () => {

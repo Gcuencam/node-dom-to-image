@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { createSvgURI } from './svg'
+import { createSvgURI } from './index'
 
 describe('createSvgURI', () => {
   it('returns a data URI embedding the captured node as a foreignObject', () => {
