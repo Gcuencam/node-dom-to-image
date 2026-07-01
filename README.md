@@ -66,6 +66,7 @@ Every function takes the node to capture and an optional [`Options`](#options) o
 | `height`          | `number`                       | node `offsetHeight` | Output height in CSS pixels.                                                |
 | `style`           | `Partial<CSSStyleDeclaration>` | —                   | Inline styles applied to the cloned root before rasterizing.                |
 | `skipFonts`       | `boolean`                      | `false`             | Skip embedding `@font-face` web fonts.                                      |
+| `signal`          | `AbortSignal`                  | —                   | Cancels an in-flight capture; rejects the promise with an `AbortError`.     |
 
 ## Limitations
 
