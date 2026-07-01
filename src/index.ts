@@ -1,4 +1,5 @@
 import { cloneHTML, filterNode, height, width } from './dom'
+import { getStylesFromFile } from './styles'
 import type { DomToImageOptions } from './types'
 
 export type { DomToImageOptions }
@@ -28,20 +29,6 @@ const createImage = async (uri: string): Promise<HTMLImageElement> => {
     image.onerror = reject
     image.src = uri
   })
-}
-
-const getStylesFromFile = (node: HTMLElement) => {
-  const stylesheet = document.querySelector<HTMLLinkElement>('[rel="stylesheet"]')
-  if (stylesheet?.sheet) {
-    const head = node.querySelector('head')
-    const cssContent = Array.from(stylesheet.sheet.cssRules)
-      .map((rule) => rule.cssText)
-      .join('\n')
-    const style = document.createElement('style')
-    style.type = 'text/css'
-    style.appendChild(document.createTextNode(cssContent))
-    head?.appendChild(style)
-  }
 }
 
 const createSvgURI = (node: HTMLElement, options: DomToImageOptions = {}): string => {
