@@ -6,3 +6,7 @@ dist/**/*
 
 # Ignore demo react app
 demo/**/*
+
+# Ignore vitest browser-mode artifacts
+**/__screenshots__/
+.vitest-attachments/

@@ -1,15 +1,11 @@
 import { createLink } from './download'
 import { createCanvas, createImage } from './render'
 import { createSvgURI } from './svg'
-import type { DomToImageOptions } from './types'
+import type { Options } from './types'
 
-export type { DomToImageOptions }
+export type { Options }
 
-const domDownloader = async (
-  node: HTMLElement,
-  fileName: string,
-  options: DomToImageOptions = {},
-) => {
+const domDownloader = async (node: HTMLElement, fileName: string, options: Options = {}) => {
   const uri: string = createSvgURI(node, options)
   const { format = 'image/png' } = options
   try {
