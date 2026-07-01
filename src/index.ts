@@ -1,15 +1,9 @@
+import { createLink } from './download'
 import { createCanvas, createImage } from './render'
 import { createSvgURI } from './svg'
 import type { DomToImageOptions } from './types'
 
 export type { DomToImageOptions }
-
-const createLink = (url: string, name: string) => {
-  const link = document.createElement('a')
-  link.download = name
-  link.href = url
-  return link
-}
 
 const domDownloader = async (
   node: HTMLElement,
