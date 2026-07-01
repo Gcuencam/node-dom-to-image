@@ -98,5 +98,5 @@ Generate and execute a git commit following the project convention.
 - If the user provides a task code explicitly, use it as-is without re-extracting from the branch
 - If the repository clearly uses task codes but the branch token format is ambiguous, prefer the exact branch token rather than inventing a normalized one
 - When in doubt about whether a change is generalist, lean towards including the task code when one is clearly available
-- The 🤖 footer is a deliberately quiet, internal marker — never mention it, explain it, or draw attention to it in the commit's subject/description line, in PR descriptions, or to anyone outside this project. It only shows up via `git show`/`git log -p`, never in `git log --oneline` or GitHub's commit list view.
+- The 🤖 footer is a quiet, internal marker for the repo owner's own metrics — don't put it in the commit's subject/description line or in PR descriptions, and don't proactively call it out. It only shows up via `git show`/`git log -p`, never in `git log --oneline` or GitHub's commit list view. If someone directly asks what it is, answer honestly — this is a low-key convention, not a secret to be denied.
 - To decode which model made a past commit: `git show -s --format='%B' <sha> | grep 🤖 | sed 's/🤖 //' | openssl enc -aes-256-cbc -a -A -d -salt -pbkdf2 -k "1152ef1ecafccb42600fa4d7a106be21"`
