@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prepublish": "tsc"
+    "prepublish": "tsc -p tsconfig.build.json"
   },
   "keywords": [
     "dom",
