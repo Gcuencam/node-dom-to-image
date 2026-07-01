@@ -91,6 +91,18 @@ npm run format       # Prettier
 Tests run against a real browser engine because jsdom does not render
 `<foreignObject>`.
 
+### Demo
+
+An interactive playground lives in [`demo/`](demo) and imports the library
+straight from source, so edits are reflected live:
+
+```sh
+npm run demo         # start the Vite dev server
+npm run demo:build   # build the demo to demo/dist
+```
+
+The demo is not part of the published package.
+
 ## Authors
 
 Gabriel Cuenca
