@@ -1,25 +1,37 @@
 {
   "name": "node-dom-to-image",
-  "version": "1.4.0",
-  "description": "Library that converts any DOM node into a downloadable image",
+  "version": "2.0.0",
+  "description": "Turn any DOM node into an SVG, canvas, PNG/JPEG, Blob or downloadable image, in the browser",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prepublish": "tsc -p tsconfig.build.json"
+    "build": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "tsc -p tsconfig.build.json"
   },
   "keywords": [
     "dom",
-    "convert",
-    "download",
-    "image"
+    "image",
+    "screenshot",
+    "canvas",
+    "svg",
+    "png",
+    "download"
   ],
   "author": "Gabriel Cuenca Moncín",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gcuencam/node-dom-to-image.git"
+  },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/node": "^26.0.1",
