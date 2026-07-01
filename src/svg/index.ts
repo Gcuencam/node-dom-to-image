@@ -1,3 +1,4 @@
+import { throwIfAborted } from '../abort'
 import { cloneNode } from '../clone'
 import { height, width } from '../dom'
 import { embedResources } from '../embed'
@@ -31,13 +32,16 @@ const applyStyleOption = (node: HTMLElement, style: Options['style']) => {
  * `<foreignObject>`.
  */
 export const createSvgURI = async (node: HTMLElement, options: Options = {}): Promise<string> => {
+  throwIfAborted(options.signal)
   await waitForFonts()
+  throwIfAborted(options.signal)
 
   const clone = cloneNode(node, options, true)
   if (!clone) return ''
 
   await embedResources(clone)
   if (!options.skipFonts) await embedWebFonts(clone)
+  throwIfAborted(options.signal)
   applyStyleOption(clone, options.style)
   clone.setAttribute('xmlns', XHTML_NAMESPACE)
 

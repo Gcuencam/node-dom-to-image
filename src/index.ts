@@ -1,3 +1,4 @@
+import { throwIfAborted } from './abort'
 import { createLink } from './download'
 import { createCanvas, createImage } from './render'
 import { createSvgURI } from './svg'
@@ -16,6 +17,7 @@ export const toCanvas = async (
 ): Promise<HTMLCanvasElement> => {
   const uri = await createSvgURI(node, options)
   const image = await createImage(uri)
+  throwIfAborted(options.signal)
   return createCanvas(node, image, options)
 }
 

@@ -90,3 +90,17 @@ describe('error propagation', () => {
     node.remove()
   })
 })
+
+describe('cancellation', () => {
+  it('rejects with an AbortError when the signal is already aborted', async () => {
+    const node = sampleNode()
+    const controller = new AbortController()
+    controller.abort()
+
+    await expect(toPng(node, { signal: controller.signal })).rejects.toMatchObject({
+      name: 'AbortError',
+    })
+
+    node.remove()
+  })
+})

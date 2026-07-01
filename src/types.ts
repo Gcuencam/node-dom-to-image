@@ -23,4 +23,6 @@ export interface Options {
   style?: Partial<CSSStyleDeclaration>
   /** Skip embedding `@font-face` web fonts. Speeds up capture when fonts are irrelevant. */
   skipFonts?: boolean
+  /** Signal to cancel an in-flight capture; rejects the returned promise with an `AbortError`. */
+  signal?: AbortSignal
 }
