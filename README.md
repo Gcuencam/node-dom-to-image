@@ -80,6 +80,26 @@ library that uses it:
   won't appear.
 - **Shadow DOM** and elements rendered outside the captured subtree are not included.
 
+## Research notes
+
+### Why not `createImageBitmap`?
+
+The one remaining step that runs on the main thread is decoding the generated SVG
+into a raster image before drawing it to the canvas. In theory,
+[`createImageBitmap`](https://developer.mozilla.org/docs/Web/API/createImageBitmap)
+would decode it off the main thread and avoid janking the page — a nice win for
+large captures.
+
+In practice it can't be used here. Browsers refuse to decode an SVG image that
+contains a `<foreignObject>` through `createImageBitmap`; Chromium throws
+`InvalidStateError: The source image could not be decoded`. This is a deliberate
+restriction tied to the tainting rules for foreign content — and a `<foreignObject>`
+is exactly what this technique relies on. So the capture keeps decoding through a
+regular `new Image()`, which browsers _do_ allow for these SVGs.
+
+Encoding, on the other hand, is already off the main thread: results go through the
+asynchronous `canvas.toBlob`, so the PNG/JPEG encode never blocks the page.
+
 ## Development
 
 ```sh
