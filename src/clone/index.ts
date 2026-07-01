@@ -1,4 +1,5 @@
 import type { Options } from '../types'
+import { preserveFormState, replaceSpecialNode } from './content'
 
 const PSEUDO_ELEMENTS = ['::before', '::after'] as const
 
@@ -65,13 +66,23 @@ const cloneChildren = (source: Element, target: HTMLElement, options: Options) =
  * document's stylesheets: every element carries its resolved computed style
  * inline, and `::before`/`::after` pseudo-elements are re-created via scoped
  * `<style>` rules. Descendants rejected by `options.filter` are dropped.
+ *
+ * `<canvas>`/`<video>` are rasterized into an `<img>` (their bitmap lives outside
+ * the DOM and would otherwise clone empty); form controls carry their live value.
  */
 export const cloneNode = (node: Element, options: Options, isRoot = false): HTMLElement | null => {
   if (!isRoot && options.filter && !options.filter(node)) return null
 
-  const clone = node.cloneNode(false) as HTMLElement
-  cloneChildren(node, clone, options)
+  const replacement = replaceSpecialNode(node)
+  const clone = replacement ?? (node.cloneNode(false) as HTMLElement)
+
+  if (!replacement) {
+    cloneChildren(node, clone, options)
+  }
   copyComputedStyle(node, clone)
-  clonePseudoElements(node, clone)
+  if (!replacement) {
+    clonePseudoElements(node, clone)
+  }
+  preserveFormState(node, clone)
   return clone
 }

@@ -57,4 +57,66 @@ describe('cloneNode', () => {
     node.remove()
     style.remove()
   })
+
+  it('rasterizes a nested canvas into an img carrying its bitmap', () => {
+    const node = document.createElement('div')
+    const canvas = document.createElement('canvas')
+    canvas.width = 8
+    canvas.height = 8
+    const ctx = canvas.getContext('2d')
+    if (ctx) {
+      ctx.fillStyle = 'rgb(0, 0, 255)'
+      ctx.fillRect(0, 0, 8, 8)
+    }
+    node.appendChild(canvas)
+    document.body.appendChild(node)
+
+    const clone = cloneNode(node, {}, true)
+    const image = clone?.querySelector('img')
+    expect(clone?.querySelector('canvas')).toBeNull()
+    expect(image?.src.startsWith('data:image/png')).toBe(true)
+
+    node.remove()
+  })
+
+  it('preserves the live value of a text input as an attribute', () => {
+    const node = document.createElement('div')
+    const input = document.createElement('input')
+    input.type = 'text'
+    node.appendChild(input)
+    document.body.appendChild(node)
+    input.value = 'typed text'
+
+    const clone = cloneNode(node, {}, true)
+    expect(clone?.querySelector('input')?.getAttribute('value')).toBe('typed text')
+
+    node.remove()
+  })
+
+  it('preserves the checked state of a checkbox', () => {
+    const node = document.createElement('div')
+    const input = document.createElement('input')
+    input.type = 'checkbox'
+    node.appendChild(input)
+    document.body.appendChild(node)
+    input.checked = true
+
+    const clone = cloneNode(node, {}, true)
+    expect(clone?.querySelector('input')?.hasAttribute('checked')).toBe(true)
+
+    node.remove()
+  })
+
+  it('preserves the live value of a textarea as its text content', () => {
+    const node = document.createElement('div')
+    const textarea = document.createElement('textarea')
+    node.appendChild(textarea)
+    document.body.appendChild(node)
+    textarea.value = 'multi\nline'
+
+    const clone = cloneNode(node, {}, true)
+    expect(clone?.querySelector('textarea')?.textContent).toBe('multi\nline')
+
+    node.remove()
+  })
 })
