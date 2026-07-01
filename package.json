@@ -1,6 +1,6 @@
 {
   "name": "node-dom-to-image",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Turn any DOM node into an SVG, canvas, PNG/JPEG, Blob or downloadable image, in the browser",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
