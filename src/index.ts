@@ -1,6 +1,7 @@
 import { throwIfAborted } from './abort'
 import { createLink } from './download'
-import { createCanvas, createImage } from './render'
+import { canvasToBlob, createCanvas, createImage } from './render'
+import { blobToDataUrl } from './resource'
 import { createSvgURI } from './svg'
 import type { Options } from './types'
 
@@ -21,10 +22,16 @@ export const toCanvas = async (
   return createCanvas(node, image, options)
 }
 
+/** Captures `node` as a `Blob` of the given `format` (defaults to PNG). */
+export const toBlob = async (node: HTMLElement, options: Options = {}): Promise<Blob> => {
+  const canvas = await toCanvas(node, options)
+  return canvasToBlob(canvas, options.format ?? 'image/png', options.quality ?? 1)
+}
+
 /** Captures `node` as a data URL of the given `format` (defaults to PNG). */
 export const toDataUrl = async (node: HTMLElement, options: Options = {}): Promise<string> => {
-  const canvas = await toCanvas(node, options)
-  return canvas.toDataURL(options.format ?? 'image/png', options.quality ?? 1)
+  const blob = await toBlob(node, options)
+  return blobToDataUrl(blob)
 }
 
 /** Captures `node` as a PNG data URL. */
@@ -34,18 +41,6 @@ export const toPng = (node: HTMLElement, options: Options = {}): Promise<string>
 /** Captures `node` as a JPEG data URL. */
 export const toJpeg = (node: HTMLElement, options: Options = {}): Promise<string> =>
   toDataUrl(node, { ...options, format: 'image/jpeg' })
-
-/** Captures `node` as a `Blob` of the given `format` (defaults to PNG). */
-export const toBlob = async (node: HTMLElement, options: Options = {}): Promise<Blob> => {
-  const canvas = await toCanvas(node, options)
-  return new Promise((resolve, reject) => {
-    canvas.toBlob(
-      (blob) => (blob ? resolve(blob) : reject(new Error('Failed to encode canvas to a Blob'))),
-      options.format ?? 'image/png',
-      options.quality ?? 1,
-    )
-  })
-}
 
 /** Captures `node` and triggers a browser download of the resulting image. */
 export const download = async (

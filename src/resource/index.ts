@@ -8,7 +8,7 @@ const dataUrlCache = new Map<string, Promise<string>>()
 
 export const isDataUrl = (url: string): boolean => url.startsWith('data:')
 
-const blobToDataUrl = (blob: Blob): Promise<string> =>
+export const blobToDataUrl = (blob: Blob): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader()
     reader.onloadend = () => resolve(reader.result as string)

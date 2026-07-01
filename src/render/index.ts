@@ -13,6 +13,23 @@ export const createImage = async (uri: string): Promise<HTMLImageElement> => {
 }
 
 /**
+ * Encodes a canvas via the asynchronous `canvas.toBlob` (which runs the encode
+ * off the main thread) instead of the synchronous, blocking `toDataURL`.
+ */
+export const canvasToBlob = (
+  canvas: HTMLCanvasElement,
+  type: string,
+  quality: number,
+): Promise<Blob> =>
+  new Promise((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => (blob ? resolve(blob) : reject(new Error('Failed to encode canvas to a Blob'))),
+      type,
+      quality,
+    )
+  })
+
+/**
  * Draws the rasterized capture onto a canvas. The bitmap is multiplied by
  * `scale` (defaulting to the device pixel ratio) so captures stay crisp on
  * high-density displays, and an optional opaque background can be painted first.
