@@ -1,5 +1,6 @@
 import { cloneNode } from '../clone'
 import { height, width } from '../dom'
+import { embedResources } from '../embed'
 import type { Options } from '../types'
 
 const XHTML_NAMESPACE = 'http://www.w3.org/1999/xhtml'
@@ -25,12 +26,14 @@ const applyStyleOption = (node: HTMLElement, style: Options['style']) => {
 
 /**
  * Serializes a node into an `image/svg+xml` data URI by embedding a
- * self-contained clone (with inlined computed styles) inside a `<foreignObject>`.
+ * self-contained clone (with inlined computed styles and resources) inside a
+ * `<foreignObject>`.
  */
-export const createSvgURI = (node: HTMLElement, options: Options = {}): string => {
+export const createSvgURI = async (node: HTMLElement, options: Options = {}): Promise<string> => {
   const clone = cloneNode(node, options, true)
   if (!clone) return ''
 
+  await embedResources(clone)
   applyStyleOption(clone, options.style)
   clone.setAttribute('xmlns', XHTML_NAMESPACE)
 
