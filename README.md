@@ -1,5 +1,11 @@
 # DOM to Image
 
+[![CI](https://img.shields.io/github/actions/workflow/status/Gcuencam/node-dom-to-image/ci.yml?branch=master&label=tests)](https://github.com/Gcuencam/node-dom-to-image/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/node-dom-to-image)](https://www.npmjs.com/package/node-dom-to-image)
+[![npm downloads](https://img.shields.io/npm/dm/node-dom-to-image)](https://www.npmjs.com/package/node-dom-to-image)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/node-dom-to-image)](https://bundlephobia.com/package/node-dom-to-image)
+[![license](https://img.shields.io/github/license/Gcuencam/node-dom-to-image)](./LICENSE)
+
 **node-dom-to-image** turns any DOM node into an image, entirely in the browser.
 
 It clones the node into a self-contained SVG `<foreignObject>` — inlining computed
